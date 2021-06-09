@@ -1,0 +1,19 @@
+.hero {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+    transition: background-image 1s ease-in-out;
+}
+
+.screen {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0, 0, 0, 0.40)
+}
+
+.innerItem {
+    height: 100px;
+    /* width: 200px; */
+}
+ 

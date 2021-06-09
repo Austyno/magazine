@@ -1,0 +1,30 @@
+.slider {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 1000px;
+    height: 500px;
+    border-radius: 10px;
+
+}
+
+.slide {
+    opacity: 0;
+    transition-duration: 5s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    transition-duration: 2s;
+    transition: transform 0.2s ease-in-out;
+
+}
+
+.card-shadow {
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 10%);
+}
