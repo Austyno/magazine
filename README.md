@@ -1,1 +1,1 @@
-A magazine site created with MongoDb, ExpressJs, ReactJs and NodeJs
+A magazine site created with MongoDb, ExpressJs, ReactJs, NodeJs and Redux

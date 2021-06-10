@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { allCat } from '../../redux/actions/category/category'
 import { Link } from 'react-router-dom'
 import './navBar.css'
 import Logo from '../../images/Cultura Logo 1.png'
+import { useSelector, useDispatch } from 'react-redux'
 
 const NavBar = () => {
-	// window.on('scroll', function () {
-	// 	if (window.scrollTop() > 20) {
-	// 		$('.header-area').addClass('sticky')
-	// 	} else {
-	// 		$('.header-area').removeClass('sticky')
-	// 	}
-	// })
+	const dispatch = useDispatch()
+	//categories
+	const cat = useSelector(state => state.categories)
+
+	const { categories } = cat
 
 	const handleScroll = () => {
 		if (window.pageYOffset > 30) {
@@ -26,6 +25,9 @@ const NavBar = () => {
 
 		return () => window.removeEventListener('scroll', handleScroll)
 	})
+	useEffect(() => {
+		dispatch(allCat())
+	}, [dispatch])
 
 	return (
 		<>
@@ -52,61 +54,20 @@ const NavBar = () => {
 								<div className='collapse navbar-collapse' id='worldNav'>
 									<ul className='navbar-nav ml-auto'>
 										<li className='nav-item active'>
-											<Link to='' className='nav-link'>
+											<Link to='/' className='nav-link'>
 												Home <span className='sr-only'>(current)</span>
 											</Link>
 										</li>
-										<li className='nav-item dropdown'>
-											<a
-												className='nav-link dropdown-toggle'
-												href='#'
-												id='navbarDropdown'
-												role='button'
-												data-toggle='dropdown'
-												aria-haspopup='true'
-												aria-expanded='false'>
-												Pages
-											</a>
-											<div
-												className='dropdown-menu'
-												aria-labelledby='navbarDropdown'>
-												<a className='dropdown-item' href='index.html'>
-													Home
-												</a>
-												<a className='dropdown-item' href='catagory.html'>
-													Catagory
-												</a>
-												<a className='dropdown-item' href='single-blog.html'>
-													Single Blog
-												</a>
-												<a className='dropdown-item' href='regular-page.html'>
-													Regular Page
-												</a>
-												<a className='dropdown-item' href='contact.html'>
-													Contact
-												</a>
-											</div>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link' href='#'>
-												Gadgets
-											</a>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link' href='#'>
-												Lifestyle
-											</a>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link' href='#'>
-												Video
-											</a>
-										</li>
-										<li className='nav-item'>
-											<a className='nav-link' href='#'>
-												Contact
-											</a>
-										</li>
+										{categories &&
+											categories?.map(cat => (
+												<li className='nav-item'>
+													<Link
+														to={`/posts/category/${cat._id}`}
+														className='nav-link'>
+														{cat.name}
+													</Link>
+												</li>
+											))}
 									</ul>
 
 									<div id='search-wrapper'>

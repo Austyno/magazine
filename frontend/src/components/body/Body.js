@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Col, Container, Row } from 'react-bootstrap'
 import OwlCarousel from 'react-owl-carousel'
 import BodyNav from '../nav/BodyNav'
-import CarouselSlider from '../carousel/Carousel'
 import { getAllGirls } from '../../redux/actions/girls/girls'
 import {
 	getAllPost,
@@ -80,11 +79,7 @@ const Body = () => {
 		dispatch(getTodaysPick())
 	}, [dispatch])
 
-	// useEffect(() => {
-	// 	if ((trendingCat[0]?)._id) {
-	// 		dispatch(getTabPost(trendingCat[0]._id))
-	// 	}
-	// }, [dispatch])
+
 
 	//TODO:solve error wit dispatch of trendingCat in useEffect
 	const getPost = catId => {
