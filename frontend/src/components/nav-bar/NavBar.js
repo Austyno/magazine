@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom'
 import './navBar.css'
 import Logo from '../../images/Cultura Logo 1.png'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
 
 const NavBar = () => {
+	let history = useHistory()
 	const dispatch = useDispatch()
 	//categories
 	const cat = useSelector(state => state.categories)
@@ -29,6 +32,9 @@ const NavBar = () => {
 		dispatch(allCat())
 	}, [dispatch])
 
+	const handleClick = () => {
+		return history.push('/cover-girls')
+	}
 	return (
 		<>
 			<header className='header-area'>
@@ -60,7 +66,7 @@ const NavBar = () => {
 										</li>
 										{categories &&
 											categories?.map(cat => (
-												<li className='nav-item'>
+												<li key={cat._id} className='nav-item'>
 													<Link
 														to={`/posts/category/${cat._id}`}
 														className='nav-link'>
@@ -68,6 +74,12 @@ const NavBar = () => {
 													</Link>
 												</li>
 											))}
+										<button
+											type='button'
+											className='focus:outline-none text-white text-sm py-2.5 px-3 rounded-md bg-gray-500 hover:bg-gray-600 hover:shadow-lg'
+											onClick={handleClick}>
+											Cover Girl
+										</button>{' '}
 									</ul>
 
 									<div id='search-wrapper'>

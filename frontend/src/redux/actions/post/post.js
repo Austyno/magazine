@@ -18,6 +18,21 @@ import {
 	CATEGORY_POSTS_REQUEST,
 	CATEGORY_POSTS_SUCCESS,
 	CATEGORY_POSTS_FAIL,
+	DELETE_POST_REQUEST,
+	DELETE_POST_SUCCESS,
+	DELETE_POST_FAIL,
+	EDIT_POST_REQUEST,
+	EDIT_POST_SUCCESS,
+	EDIT_POST_FAIL,
+	UPDATE_POST_REQUEST,
+	UPDATE_POST_SUCCESS,
+	UPDATE_POST_FAIL,
+	GET_ALL_POST_ADMIN_REQUEST,
+	GET_ALL_POST_ADMIN_SUCCESS,
+	GET_ALL_POST_ADMIN_FAIL,
+	CREATE_POST_REQUEST,
+	CREATE_POST_SUCCESS,
+	CREATE_POST_FAIL,
 } from '../../constants/post/postConstants'
 
 export const getAllPost = () => async dispatch => {
@@ -121,23 +136,181 @@ export const getSinglePost = id => async dispatch => {
 		})
 	}
 }
-export const getAllCatPost = (catId) => async (dispatch) => {
+export const getAllCatPost = catId => async dispatch => {
 	dispatch({
 		type: CATEGORY_POSTS_REQUEST,
 	})
 
 	try {
-		const res = await axios.get(`/api/posts/cat-posts/${ catId }`)
+		const res = await axios.get(`/api/posts/cat-posts/${catId}`)
 		const data = res?.data?.data
 
 		dispatch({
 			type: CATEGORY_POSTS_SUCCESS,
-			payload: data
+			payload: data,
 		})
 	} catch (e) {
 		dispatch({
 			type: CATEGORY_POSTS_FAIL,
 			payload: e.response?.data?.message,
+		})
+	}
+}
+
+export const deletePost = id => async (dispatch, getState) => {
+	dispatch({ type: DELETE_POST_REQUEST })
+
+	const userLogin = getState().userLogin
+	const {
+		userInfo: { token },
+	} = userLogin
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+
+	try {
+		const res = await axios.delete(`/api/posts/${id}`, config)
+
+		const data = res?.data?.data
+
+		dispatch({
+			type: DELETE_POST_SUCCESS,
+			payload: data,
+		})
+	} catch (e) {
+		dispatch({
+			type: DELETE_POST_FAIL,
+			payload: e.response?.data?.message,
+		})
+	}
+}
+export const editPost = id => async (dispatch, getState) => {
+	dispatch({
+		type: EDIT_POST_REQUEST,
+	})
+
+	const userLogin = getState().userLogin
+	const {
+		userInfo: { token },
+	} = userLogin
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	try {
+		const res = await axios.get(`/api/posts/edit/${id}`, config)
+		const data = res?.data?.data
+
+		dispatch({
+			type: EDIT_POST_SUCCESS,
+			payload: data,
+		})
+	} catch (e) {
+		dispatch({
+			type: EDIT_POST_FAIL,
+			payload: e.response?.data?.message,
+		})
+	}
+}
+export const updatePost = (id, post) => async (dispatch, getState) => {
+	dispatch({
+		type: UPDATE_POST_REQUEST,
+	})
+
+	const userLogin = getState().userLogin
+	const {
+		userInfo: { token },
+	} = userLogin
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+
+	try {
+		const res = await axios.put(`/api/posts/edit/${id}`, post, config)
+		const data = res?.data?.data
+
+		dispatch({
+			type: UPDATE_POST_SUCCESS,
+			payload: data,
+		})
+	} catch (e) {
+		dispatch({
+			type: UPDATE_POST_FAIL,
+			payload: e.response?.data?.message,
+		})
+	}
+}
+
+export const getPostForAdmin = () => async (dispatch, getState) => {
+	dispatch({
+		type: GET_ALL_POST_ADMIN_REQUEST,
+	})
+
+	const userLogin = getState().userLogin
+	const {
+		userInfo: { token },
+	} = userLogin
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	try {
+		const res = await axios.get('/api/posts/admin', config)
+
+		const data = res?.data?.data
+
+		dispatch({
+			type: GET_ALL_POST_ADMIN_SUCCESS,
+			payload: data,
+		})
+	} catch (e) {
+		dispatch({
+			type: GET_ALL_POST_ADMIN_FAIL,
+			payload: e.response?.data?.message,
+		})
+	}
+}
+
+export const createPost = postData => async (dispatch, getState) => {
+	dispatch({
+		type: CREATE_POST_REQUEST,
+	})
+
+	const userLogin = getState().userLogin
+	const {
+		userInfo: { token },
+	} = userLogin
+
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	}
+
+	try {
+		const res = await axios.post('/api/posts', postData, config)
+
+		const data = res?.data?.data
+
+		dispatch({
+			type: CREATE_POST_SUCCESS,
+			payload: data,
+		})
+	} catch (e) {
+		dispatch({
+			type: CREATE_POST_FAIL,
+			payload:e.response?.data?.message
+				
 		})
 	}
 }

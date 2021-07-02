@@ -6,6 +6,9 @@ import {
 	SINGLE_CATEGORY_REQUEST,
 	SINGLE_CATEGORY_SUCCESS,
 	SINGLE_CATEGORY_FAIL,
+	ADMIN_CATEGORY_REQUEST,
+	ADMIN_CATEGORY_SUCCESS,
+	ADMIN_CATEGORY_FAIL,
 } from '../../constants/category/categoryConstants'
 
 export const allCat = () => async dispatch => {
@@ -46,3 +49,36 @@ export const getCategory = id => async dispatch => {
 		})
 	}
 }
+
+// export const getAdminCategory = () => async (dispatch, getState) => {
+// 	dispatch({
+// 		type: ADMIN_CATEGORY_REQUEST,
+// 	})
+
+// 	const userLogin = getState().userLogin
+// 	const {
+// 		userInfo: { token },
+// 	} = userLogin
+
+// 	const config = {
+// 		headers: {
+// 			Authorization: `Bearer ${token}`,
+// 		},
+// 	}
+
+// 	try {
+// 		const res = await axios.get('/api/category/admin', config)
+
+// 		const data = res.data.data
+
+// 		dispatch({
+// 			type: ADMIN_CATEGORY_SUCCESS,
+// 			payload: data,
+// 		})
+// 	} catch (e) {
+// 		dispatch({
+// 			type: ADMIN_CATEGORY_FAIL,
+// 			payload: e.response?.data?.message,
+// 		})
+// 	}
+// }

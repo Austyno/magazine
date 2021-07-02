@@ -45,11 +45,7 @@ const Body = () => {
 	//tab post
 	const tabPostState = useSelector(state => state.tabPost)
 
-	const {
-		loading: tabPostLoading,
-		error: tabPostError,
-		tabPosts,
-	} = tabPostState
+	const { tabPosts } = tabPostState
 
 	//top stories
 	const topStoriesState = useSelector(state => state.topStories)
@@ -79,8 +75,6 @@ const Body = () => {
 		dispatch(getTodaysPick())
 	}, [dispatch])
 
-
-
 	//TODO:solve error wit dispatch of trendingCat in useEffect
 	const getPost = catId => {
 		dispatch(getTabPost(catId))
@@ -88,7 +82,7 @@ const Body = () => {
 
 	return (
 		<>
-			<Container>
+			<Container className=''>
 				<Row>
 					<Col md={8} className='border-r'>
 						<BodyNav cat={categories} />
@@ -97,7 +91,9 @@ const Body = () => {
 							<Col md={6}>
 								<div className=''>
 									{loading ? (
-										<Loader />
+										<div className='text-center'>
+											<Loader />
+										</div>
 									) : error ? (
 										<span>{error}</span>
 									) : (
@@ -163,7 +159,6 @@ const Body = () => {
 												/>
 											))
 										)}
-
 									</div>
 								</Row>
 								<Row>
@@ -175,7 +170,7 @@ const Body = () => {
 														<div className='item post-style-2 d-flex align-items-center w-128'>
 															<div className='w-full pr-2'>
 																<img
-																	className='w-24 h-24 rounded-l-sm'
+																	className='w-24 h-24 rounded'
 																	src={item.image}
 																	alt=''
 																/>

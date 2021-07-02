@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import Logo from '../../images/Cultura Logo 1.png'
 import './footer.css'
-import { Col } from 'react-bootstrap'
+import { allCat } from '../../redux/actions/category/category'
 
 const Footer = () => {
+	const dispatch = useDispatch()
+	//categories
+	const cat = useSelector(state => state.categories)
+
+	const { categories } = cat
+
+	useEffect(() => {
+		dispatch(allCat())
+	}, [dispatch])
+
 	return (
 		<>
 			<footer className='footer-area'>
@@ -13,15 +24,16 @@ const Footer = () => {
 					<div className='row'>
 						<div className='col-12 col-md-4'>
 							<div className='footer-single-widget'>
-								<a href='#'>
-									<img className="w-24 rounded" src={Logo} alt='' />
-								</a>
+								<LinkContainer to='/'>
+									<img className='w-24 rounded' src={Logo} alt='' />
+								</LinkContainer>
 								<div className='copywrite-text mt-30'>
 									<p>
 										Copyright ©
 										<script>document.write(new Date().getFullYear());</script>
 										2021 All rights reserved | Powered by SurgeStone Tech{' '}
 										<i className='fa fa-heart-o' aria-hidden='true'></i> by{' '}
+										SurgeStone Tech
 									</p>
 								</div>
 							</div>
@@ -30,26 +42,13 @@ const Footer = () => {
 							<div className='footer-single-widget'>
 								<ul className='footer-menu d-flex justify-content-between'>
 									<li>
-										<a href='#'>Food & Drinks</a>
+										<Link to='/'>Home</Link>
 									</li>
-									<li>
-										<a href='#'>Rides</a>
-									</li>
-									<li>
-										<a href='#'>Culture</a>
-									</li>
-									<li>
-										<a href='#'>Style</a>
-									</li>
-									<li>
-										<a href='#'>Girls</a>
-									</li>
-									<li>
-										<a href='#'>Video</a>
-									</li>
-									<li>
-										<a href='#'>Entertainment</a>
-									</li>
+									{categories?.map(cat => (
+										<li key={cat._id}>
+											<Link to={`/posts/category/${cat._id}`}>{cat.name}</Link>
+										</li>
+									))}
 								</ul>
 							</div>
 						</div>

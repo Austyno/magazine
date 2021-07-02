@@ -33,23 +33,28 @@ exports.login = async (req, res, next) => {
 		return next(new Error('please enter email and password', 400))
 	}
 
-	const user = await User.findOne({ email })
+	const user = await User.findOne({ email }).select('+password')
 
-	if (user) {
-		const check = bcrypt.compareSync(password, user.password)
-
-		if (check) {
-			try {
-				const token = generateJwtToken(user._id)
-				res.status(200).json({
-					success: true,
-					data: token,
-				})
-			} catch (e) {
-				return next(new Error(e.message, 500))
-			}
-		} else {
-			return next(new Error('invalid credentials'))
-		}
+	if (!user) {
+		return next(new Error('invalid credentials',400))
 	}
+
+	const check = bcrypt.compareSync(password, user.password)
+
+	if (!check) {
+		return next(new Error('invalid credentials', 400))
+	}
+	try {
+		const token = generateJwtToken(user._id)
+		user.password = null
+
+		res.status(200).json({
+			success: true,
+			data: user,
+			token,
+		})
+	} catch (e) {
+		next(new Error(e.message,500))
+	}
+
 }

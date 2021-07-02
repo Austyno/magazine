@@ -10,7 +10,18 @@ const ModelsSchema = new mongoose.Schema(
 		},
 		photo: {
 			type: String,
-			required: [true, 'please add an image'],
+			required: [true, 'please add a main image'],
+		},
+		photos: {
+			type: Array,
+			required: [true, 'please add images of the model'],
+		},
+		totalVotes: {
+			type: Number,
+			default: 0
+		},
+		voters: {
+			type: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
 		},
 	},
 	{ timestamps: true }

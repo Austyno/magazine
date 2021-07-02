@@ -5,6 +5,9 @@ import {
 	SINGLE_CATEGORY_REQUEST,
 	SINGLE_CATEGORY_SUCCESS,
 	SINGLE_CATEGORY_FAIL,
+	ADMIN_CATEGORY_REQUEST,
+	ADMIN_CATEGORY_SUCCESS,
+	ADMIN_CATEGORY_FAIL,
 } from '../../constants/category/categoryConstants'
 
 export const getAllCategoryReducer = (state = { categories: [] }, action) => {
@@ -27,6 +30,19 @@ export const getSingleCatReducer = (state = { cat: {} }, action) => {
 		case SINGLE_CATEGORY_SUCCESS:
 			return { loading: false, cat: action.payload }
 		case SINGLE_CATEGORY_FAIL:
+			return { loading: false, error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const adminCategoryReducer = (state = { categories: [] }, action) => {
+	switch (action.type) {
+		case ADMIN_CATEGORY_REQUEST:
+			return { loading: true }
+		case ADMIN_CATEGORY_SUCCESS:
+			return { loading: false, categories: action.payload }
+		case ADMIN_CATEGORY_FAIL:
 			return { loading: false, error: action.payload }
 		default:
 			return state

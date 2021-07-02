@@ -22,19 +22,21 @@ app.use(
 )
 
 //enable cors
-app.use(
-	cors({
-		credentials: true,
-		origin: '*',
-	})
-)
+app.use(cors())
 
 const postRouter = require('./routes/post/post')
 const CategoryRouter = require('./routes/category/category')
 const ModelsRouter = require('./routes/girls/girls')
+const NewsLetterRouter = require('./routes/newsletter/newsLetter')
+const userRoutes = require('./routes/users/user')
+
+
+
 // Body parser
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
+app.set('asset', path.join(__dirname, 'asset'))
+app.set('view engine', 'ejs')
 
 app.use(mongoSanitize())
 
@@ -51,6 +53,18 @@ app.use(hpp())
 app.use('/api/posts', postRouter)
 app.use('/api/category', CategoryRouter)
 app.use('/api/models', ModelsRouter)
+app.use('/api/newsletter', NewsLetterRouter)
+app.use('/api/users', userRoutes)
+
+
+app.all('*', (req, res, next) => {
+	next(
+		new Errors(
+			`Can't find ${req.originalUrl} on this Server!`,
+			Response.HTTP_NOT_FOUND
+		)
+	)
+})
 
 app.use(Errors)
 

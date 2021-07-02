@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Col, Container, Row } from 'react-bootstrap'
 import {
 	getTopStories,
 	getTodaysPick,
@@ -8,9 +7,9 @@ import {
 	getTabPost,
 } from '../redux/actions/post/post'
 import Loader from '../components/loader/Loader'
-import Cards from '../components/card/Card'
-import LargeCard from '../components/large-card/largeCard'
-import SinglePost from '../components/single-post/SinglePost'
+// import Cards from '../components/card/Card'
+// import LargeCard from '../components/large-card/largeCard'
+// import SinglePost from '../components/single-post/SinglePost'
 import { Link } from 'react-router-dom'
 import Footer from '../components/footer/Footer'
 
@@ -262,107 +261,6 @@ const SingleBlogPost = ({ match }) => {
 					</div>
 				</div>
 			)}
-			{/* <Container>
-				<Row>
-					<Col md={8}>
-						<>
-							<div classNameName='border-t mt-32 border-gray-400'>
-								{loading ? (
-									<Loader />
-								) : error ? (
-									<span>{error}</span>
-								) : (
-									<>
-										<SinglePost post={post} />
-									</>
-								)}
-							</div>
-						</>
-						<Row>
-							<div classNameName='p-10 lg:pt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8'>
-								{tabPostLoading ? (
-									<Loader />
-								) : tabPostError ? (
-									<span>{tabPostError}</span>
-								) : (
-									tabPosts?.map(post => (
-										<LargeCard
-											title={post.title}
-											text={`${post.content.slice(0, 50)}...`}
-											img={post.image}
-											cat={post.category}
-											key={post._id}
-										/>
-									))
-								)}
-							</div>
-						</Row>
-					</Col>
-					<Col md={4} classNameName='border-l'>
-						<div
-							classNameName='border-b border-gray-400'
-							style={{ marginTop: '79px' }}>
-							<h2 classNameName='border-b border-gray-400 text-xl italic font-bold p-3'>
-								About
-							</h2>
-							<p classNameName='text-gray-500 text-base p-3'>
-								The mango is perfect in that it is always yellow and if it’s
-								not, I don’t want to hear about it. The mango’s only flaw, and
-								it’s a minor one, is the effort it sometimes takes to undress
-								the mango, carve it up in a way that makes sense, and find its
-								way to the mouth.
-							</p>
-						</div>
-						<div classNameName='text-xl italic font-bold p-3'>Top Stories</div>
-						<div classNameName='border-t border-b border-gray-400 pb-4 pt-4'>
-							{topStoriesLoading ? (
-								<Loader />
-							) : topStoriesError ? (
-								<span>{topStoriesError}</span>
-							) : (
-								topStories?.map(top => (
-									<Cards
-										title={top.title}
-										img={top.image}
-										subtitle={top.content.slice(0, 20)}
-										key={top._id}
-									/>
-								))
-							)}
-						</div>
-						<div classNameName='text-xl italic font-bold p-3'>Stay Connected</div>
-						<div classNameName='d-flex justify-evenly border-t border-b border-gray-400 p-4'>
-							<a href='#'>
-								<i classNameName='fa fa-facebook'></i>
-							</a>
-							<a href='#'>
-								<i classNameName='fa fa-twitter'></i>
-							</a>
-							<a href='#'>
-								<i classNameName='fa fa-instagram'></i>
-							</a>
-							<a href='#'>
-								<i classNameName='fa fa-google'></i>
-							</a>
-						</div>
-						<div classNameName='text-xl italic font-bold p-3'>Today's Pick</div>
-						<div classNameName='border-t border-gray-400 pb-4 pt-4'>
-							{todaysPickLoading ? (
-								<Loader />
-							) : todaysPickError ? (
-								<span>{todaysPickError}</span>
-							) : (
-								<LargeCard
-									title={todaysPick[0]?.title}
-									text={`${todaysPick[0]?.content.slice(0, 100)}...`}
-									img={todaysPick[0]?.image}
-								/>
-							)}
-						</div>
-					</Col>
-				</Row>
-			</Container> */}
-			<Footer />
 		</>
 	)
 }
